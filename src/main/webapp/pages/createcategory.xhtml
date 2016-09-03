@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title></title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 70%;
+                text-align: center;
+            }
+            title {
+                font-size: 5px
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel id="panel"
+                     header="Новая Категория"
+                     style="margin: auto">
+                <p:messages id="messages2"
+                            style="text-align: left;font-size: 11px"/>
+                <h:panelGrid columns="3"
+                             cellpadding="5"
+                             style="font-size: 11px">
+                    <p:outputLabel for="categoryname"
+                                   value="Введите имя категории:"/>
+                    <p:inputText id="categoryname"
+                                 label="Name"
+                                 value="#{registerCategoryBean.category.name}"
+                                 required="true"
+                                 requiredMessage="Заполните название"
+                                 style="text-align: left"
+                                 />
+                    <p:message for="categoryname"/>
+                    <p:outputLabel for="desc"
+                                   value="Введите описание категории:"
+                                   style="vertical-align: top">            
+                    </p:outputLabel>
+                    <p:inputTextarea id="desc"
+                                     label="Description"
+                                     value="#{registerCategoryBean.category.description}"
+                                     cols="21"
+                                     rows="5"
+                                     required="true"
+                                     requiredMessage="Заполните описание"
+                                     style="text-align: left"
+                                     >
+                    </p:inputTextarea>
+                    <p:message for="desc"/>
+                    <p:commandButton value="Register"
+                                     actionListener="#{registerCategoryBean.register}"
+                                     update="panel"
+                                     style="text-align: left">
+                    </p:commandButton>
+                </h:panelGrid>    
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
+

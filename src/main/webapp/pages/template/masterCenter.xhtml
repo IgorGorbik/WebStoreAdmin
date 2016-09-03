@@ -1,0 +1,66 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8'
+                      http-equiv="Content-Type"/>
+                <title>MainPage</title>
+            </f:facet>
+            <style>
+                .ui-layout-north {
+                    z-index:20 !important;
+                    overflow:visible !important;
+                }
+                .ui-layout-south {
+
+                }
+                .ui-layout-north .ui-layout-unit-content {
+                    overflow:visible !important;
+                }
+                .ui-tabs .ui-tabs-nav li.ui-tabs-selected a,
+                .ui-tabs .ui-tabs-nav li a { 
+                    font-size: 11px;
+                    font-weight: normal;
+                }
+                .ui-datatable thead th,
+                .ui-datatable tbody td,
+                .ui-datatable tfoot td,
+                .ui-datatable tfoot th{
+                    font-size: 11px;
+                    text-align: center;
+                }
+                .ui-dialog .ui-dialog-content {
+                    font-size: 12px;
+                }
+            </style>
+        </h:head>
+
+        <h:body>
+
+            <p:layout  id="b1" fullPage="true">
+                <p:layoutUnit position="north">
+                    <ui:insert name="header" >
+                        <ui:include src="/pages/template/common/commonHeader.xhtml" />
+                    </ui:insert>
+                </p:layoutUnit>
+                <p:layoutUnit position="center" style="font-size: 11px;">
+                    <ui:insert name="main" />
+                </p:layoutUnit>
+                <p:layoutUnit position="south">
+                    <ui:insert name="footer" >
+                        <ui:include src="/pages/template/common/commonFooter.xhtml" />
+                    </ui:insert>
+                </p:layoutUnit>
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>MainPage</title>
+            </f:facet>
+            <style>
+                .ui-layout-north {
+                    z-index:20 !important;
+                    overflow:visible !important;
+                }
+
+                .ui-layout-north .ui-layout-unit-content {
+                    overflow:visible !important;
+                }
+                .ui-menu .ui-widget-header h1,
+                .ui-menu .ui-widget-header h2,
+                .ui-menu .ui-widget-header h3,
+                .ui-menu .ui-widget-header h4,
+                .ui-menu .ui-widget-header h5,
+                .ui-menu .ui-widget-header h6 {
+                    float: none;text-align: center;
+                }
+            </style>
+        </h:head>
+        <h:body>
+            <p:growl id="messages" ></p:growl>
+            <p:layout  id="b1" fullPage="true">
+                <p:layoutUnit position="north" collapsible="true">
+                    <h:form style="font-size: 11px">  
+                        <p:growl id="messages"/>
+                        <p:menubar>
+                            <p:menuitem value="Заказы" action="orders" />
+                            <p:menuitem value="Пользователи"  action="users"  />
+                            <p:menuitem value="Справка" url="#" />
+                            <p:submenu label="Категория">
+                                <p:menuitem value="Контент" action="main.xhtml"  ajax="false"/>
+                                <p:menuitem value="Архив">
+
+                                </p:menuitem>
+                            </p:submenu>
+                            <f:facet name="options">
+                                <p:inputText id="search" style="margin-right:10px" placeholder="Search"/>
+
+                                <p:commandButton  action="#{loginBean.logout}"
+                                                  ajax="false"
+                                                  value="Logout"
+                                                  icon="ui-icon-extlink"
+                                                  id="logout"/>
+                            </f:facet>
+                        </p:menubar>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit position="west" style="font-size: 11px;" collapsible="true">
+                    <h:form id="a">
+                        <p:menu id="messages1" style="font-size: 11px;" model="#{programmaticMenuBean.model}"  />
+                    </h:form>
+                    <br/>
+                    <h:form>
+                        <p:commandButton id="d" value="Добавить" actionListener="#{createCategoryView.open}">
+                            <p:ajax event="dialogReturn"
+                                    listener="#{createCategoryView.onClosingDialog}"
+                                    update=":a:messages1 :messages "/>
+                        </p:commandButton>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit position="center" style="font-size: 11px">
+                    <p:layout  id="b2">
+                        <p:layoutUnit position="north">
+                            <f:facet name="header">
+                                <div align="center">    
+                                    <h:outputText id="messages4"
+                                                  value="#{categoryTableBean.category.name}"
+                                                  style="font-size: 12px;font-weight: bold;"/>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="messages3"
+                                         var="category"
+                                         value="#{categoryTableBean.list}" style="text-align: center">
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{category.categoryId}" />
+                                </p:column>
+                                <p:column headerText="Наименование">
+                                    <h:outputText value="#{category.name}" />
+                                </p:column>
+                                <p:column headerText="Описание">
+                                    <h:outputText value="#{category.description}" />
+                                </p:column>
+                                <p:column style="width:32px;text-align: center">
+                                    <h:form>
+                                        <p:commandButton id="pwd1" 
+                                                         icon="ui-icon-pencil"
+                                                         disabled="false"/>
+                                        <p:tooltip for="pwd1"
+                                                   value="Редактировать"
+                                                   style="font-size: 9px"/>
+                                    </h:form>
+                                </p:column>
+                                <p:column style="width:32px;text-align: center">
+                                    <h:form>
+                                        <p:commandButton id="pwd" 
+                                                         icon="ui-icon-trash"
+                                                         disabled="false"
+                                                         actionListener="#{categoryTableBean.deleteCurrentCategory}"
+                                                         update=":a:messages1 :messages3 :messages4 :messages5 :form1:d"/>
+                                        <p:tooltip for="pwd"
+                                                   value="Удалить"
+                                                   style="font-size: 9px"/>
+                                    </h:form> 
+                                </p:column>
+                            </p:dataTable> 
+                        </p:layoutUnit>
+                        <p:layoutUnit position="center">
+                            <f:facet name="header">
+                                <div align="center">    
+                                    <h:outputText 
+                                        value="Список товаров"
+                                        style="font-size: 12px;font-weight: bold;"/>
+                                </div>
+                            </f:facet>
+                            <p:dataTable id="messages5"
+                                         var="prod"
+                                         value="#{categoryTableBean.active}"
+                                         style="text-align: center"
+                                         paginator="true"
+                                         rows="10">
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{prod.productId}" />
+                                </p:column>
+                                <p:column headerText="Наименование">
+                                    <h:outputText value="#{prod.name}" />
+                                </p:column>
+                                <p:column headerText="Цена">
+                                    <h:outputText value="#{prod.price}" />
+                                </p:column>
+                                <p:column headerText="Количество">
+                                    <h:outputText value="#{prod.quantity}" />
+                                </p:column>
+                                <p:column headerText="Описание">
+                                    <h:outputText value="#{prod.description}" />
+                                </p:column>
+                                <p:column style="width:32px;text-align: center">
+                                    <h:form>
+                                        <p:commandButton id="pwd2" 
+                                                         icon="ui-icon-pencil"
+                                                         disabled="false"/>
+                                        <p:tooltip for="pwd2"
+                                                   value="Редактировать"
+                                                   style="font-size: 9px"/>
+                                    </h:form>
+                                </p:column>
+                                <p:column style="width:32px;text-align: center">
+                                    <h:form>
+                                        <p:commandButton id="pwd3" 
+                                                         icon="ui-icon-trash"
+                                                         actionListener="#{productService.updateProductIsDeleted(prod.productId, 1)}"
+                                                         update=":messages5"
+
+                                                         disabled="false">
+
+                                        </p:commandButton>
+                                        <p:tooltip id="tip1" for="pwd3"
+                                                   value="Удалить"
+                                                   style="font-size: 9px"/>
+                                    </h:form> 
+                                </p:column>
+                            </p:dataTable>
+                            <h:form id="form1">
+                                <p:commandButton id="d"
+                                                 icon="ui-icon-plus"
+                                                 rendered="#{categoryTableBean.category != null}"
+                                                 actionListener="#{createProductView.open()}">
+                                    <p:ajax event="dialogReturn"
+                                            listener="#{createProductView.onClosingDialog()}"
+                                            update=":messages5"/>
+                                </p:commandButton>
+                            </h:form>
+                            <h:form id="form2">
+                                <p:commandButton id="d1"
+                                                 value="Archive"
+                                                 actionListener="#{archiveProductView.open()}">
+                                    <p:ajax event="dialogReturn"
+                                            update=":a:messages1 :messages :messages5"/>
+                                </p:commandButton>
+                            </h:form>
+                        </p:layoutUnit>
+                    </p:layout>
+                </p:layoutUnit>
+                <p:layoutUnit position="south">
+                    <ui:insert name="footer" >
+                        <ui:include src="/pages/template/common/commonFooter.xhtml" />
+                    </ui:insert>
+                </p:layoutUnit>
+            </p:layout>
+            <script>
+                $(document).ready(function () {
+
+                    var checkField;
+
+                    //checking the length of the value of message and assigning to a variable(checkField) on load
+                    checkField = $('#j_idt7\\:search').val().length;
+
+                    var enableDisableButton = function () {
+                        if (checkField > 0) {
+                            $('#j_idt7\\:logout').removeAttr("disabled");
+                        } else {
+                            $('#j_idt7\\:logout').attr("disabled", "disabled");
+                        }
+                    };
+
+                    //calling enableDisableButton() function on load
+                    enableDisableButton();
+
+                    $('#j_idt7\\:search').keyup(function () {
+                        //checking the length of the value of message and assigning to the variable(checkField) on keyup
+                        checkField = $('#j_idt7\\:search').val().length;        
+                        //calling enableDisableButton() function on keyup
+                        enableDisableButton();
+                    });
+                });
+            </script>
+        </h:body>
+    </f:view>
+</html>
+

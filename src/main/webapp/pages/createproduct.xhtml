@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title></title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 70%;
+                text-align: center;
+            }
+            title {
+                font-size: 5px
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panel id="panel"
+                     header="Новый товар"
+                     style="margin: auto">
+                <p:messages id="messages"
+                            style="text-align: left;font-size: 11px"/>
+                <h:panelGrid columns="3"
+                             cellpadding="5"
+                             style="font-size: 11px">
+                    <p:outputLabel for="productname"
+                                   value="Введите имя продукта:"/>
+                    <p:inputText id="productname"
+                                 label="Name"
+                                 value="#{registerProductBean.product.name}"
+                                 required="true"
+                                 requiredMessage="Заполните название"
+                                 style="text-align: left"
+                                 />
+                    <p:message for="productname"/>
+                    <p:outputLabel for="productprice"
+                                   value="Цена:"/>
+                    <p:inputText id="productprice"
+                                 label="Price"
+                                 value="#{registerProductBean.product.price}"
+                                 required="true"
+                                 requiredMessage="Заполните поле цены"
+                                 style="text-align: left"
+                                 />
+                    <p:message for="productprice"/>
+                    <p:outputLabel for="productcount"
+                                   value="Количество:"/>
+                    <p:spinner id="productcount" 
+                               min="0"
+                               value="#{registerProductBean.product.quantity}"/>
+                    <p:message for="productcount"/>
+                    <p:outputLabel for="descproduct"
+                                   value="Введите описание продукта:"
+                                   style="vertical-align: top">            
+                    </p:outputLabel>
+                    <p:inputTextarea id="descproduct"
+                                     label="Description"
+                                     value="#{registerProductBean.product.description}"
+                                     cols="21"
+                                     rows="5"
+                                     required="true"
+                                     requiredMessage="Заполните описание"
+                                     style="text-align: left"
+                                     >
+                    </p:inputTextarea>
+                    <p:message for="descproduct"/>
+                    <p:commandButton value="Register"
+                                     actionListener="#{registerProductBean.register}"
+                                     update="panel"
+                                     style="text-align: left">
+                    </p:commandButton>
+                </h:panelGrid>    
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
+

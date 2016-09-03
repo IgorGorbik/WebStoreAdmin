@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Welcome to JSF_PrimeFaces_Hibernate Project</title>
+    </h:head>
+    <h:body style="
+            display: flex;width:100%;
+            height:100vh;
+            justify-content:center;
+            align-items:center;
+            margin: 10px;
+            font-family: cursive;
+            background: linear-gradient(to bottom right,#ccccff, white,#ccccff)">
+        <h:form>
+            <div style="  
+                 padding: 3px;border-style: groove ">
+                <h:form id="loginform">
+                    <p:panel>
+                        <p:messages id="login" style="font-size: 90%"></p:messages>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="username" value="Пользователь:" />
+                            <p:inputText 
+                                         id="username"
+                                         required="true"
+                                         requiredMessage="Введите имя пользователя"
+                                         value="#{loginBean.admin.name}"
+                                         label="username">
+                                
+                            </p:inputText>
+                            
+                            <h:outputLabel for="password" value="Пароль:" />
+                            <p:password value="#{loginBean.admin.password}"
+                                        id="password"
+                                        required="true"
+                                        requiredMessage="Введите пароль" 
+                                         />
+                            <p:watermark for="username" value="Enter username"/>
+                            <p:watermark for="password" value="Enter password" />
+                            <h:outputText></h:outputText>
+                            <p:commandButton id="loginButton"
+                                             value="Войти"
+                                             update="login"
+                                             style="float:right" 
+                                             action="#{loginBean.validateUsernamePassword}"
+                                             ajax="false" />
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

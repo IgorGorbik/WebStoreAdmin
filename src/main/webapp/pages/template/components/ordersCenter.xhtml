@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition>
+            <f:facet name="header">
+                <div align="center">    
+                    <h:outputText 
+                        value="Заказы"
+                        style="font-size: 12px;font-weight: bold;"/>
+                </div>
+            </f:facet>
+            <div>
+                <p:tabView id="tabView" >
+                    <p:tab title="Актив">
+                        <h:form id="mainform">
+                            <p:dataTable id="active"
+                                         var="order"
+                                         value="#{show.activeOrders}"
+                                         style="text-align: center;font-size: 12px"
+                                         paginator="true" 
+                                         rows="10">
+                                <p:column headerText="ID">
+                                    <h:outputText value="#{order.orderId}" />
+                                </p:column>
+                                <p:column headerText="Заказчик">
+                                    <p:commandLink update=":tabView:mainform:userDetail"
+                                                   oncomplete="PF('userDialog').show()"
+                                                   style="color: #3333ff"
+                                                   title="View"
+                                                   value="Инфо">
+                                        <f:setPropertyActionListener value="#{order.user}"
+                                                                     target="#{show.selectedUser}" />
+                                    </p:commandLink>
+                                </p:column>
+                                <p:column headerText="Время заказа">
+                                    <h:outputText value="#{order.dateTime}" />
+                                </p:column>
+                                <p:column headerText="Адрес">
+                                    <h:outputText value="#{order.deliveryAddress}" />
+                                </p:column>
+                                <p:column headerText="Данные">
+                                    <h:form id="del">
+                                        <p:commandLink value="Details"
+                                                       style="color: #3333ff"
+                                                       actionListener="#{ordersDetailsBean.open(order)}">
+                                            <p:ajax event="dialogReturn"
+                                                    update="@all"/>
+                                        </p:commandLink>
+                                    </h:form>
+                                </p:column>
+                            </p:dataTable>
+                            <p:dialog widgetVar="userDialog"
+                                      modal="true"
+                                      appendTo="@(body)"
+                                      showEffect="fade"
+                                      hideEffect="fade"
+                                      resizable="false"
+                                      draggable="false">
+                                <p:outputPanel id="userDetail"
+                                               style="text-align:center;">
+                                    <p:panelGrid  columns="2"
+                                                  rendered="#{not empty show.selectedUser}"
+                                                  columnClasses="label,value">
+                                        <h:outputText value="Id:" />
+                                        <h:outputText value="#{show.selectedUser.userId}" />
+
+                                        <h:outputText value="Name:" />
+                                        <h:outputText value="#{show.selectedUser.name}"/>
+
+                                        <h:outputText value="Email" />
+                                        <h:outputText value="#{show.selectedUser.email}" />
+
+                                        <h:outputText value="Phone" />
+                                        <h:outputText value="#{show.selectedUser.phone}" />
+                                    </p:panelGrid>
+                                </p:outputPanel>
+                            </p:dialog>
+                        </h:form>
+                    </p:tab>
+                    <p:tab></p:tab>
+                </p:tabView>
+            </div>
+        </ui:composition>
+    </body>
+
+</html>
