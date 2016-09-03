@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Архивная продукция</title>
+        <style type="text/css">
+            .ui-widget {
+                font-size: 90%;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <p:dataTable id="messages5"
+                         var="prod"
+                         value="#{categoryTableBean.archive}"
+                         style="text-align: center"
+                         paginator="true"
+                         rows="10">
+                <p:column headerText="ID">
+                    <h:outputText value="#{prod.productId}" />
+                </p:column>
+                <p:column headerText="Наименование">
+                    <h:outputText value="#{prod.name}" />
+                </p:column>
+                <p:column headerText="Цена">
+                    <h:outputText value="#{prod.price}" />
+                </p:column>
+                <p:column headerText="Количество">
+                    <h:outputText value="#{prod.quantity}" />
+                </p:column>
+                <p:column headerText="Описание">
+                    <h:outputText value="#{prod.description}" />
+                </p:column>
+                <p:column style="width:32px;text-align: center">
+                    <h:form>
+                        <p:commandButton id="pwd2" 
+                                         icon="ui-icon-pencil"                                
+                                         disabled="false">
+                            <p:ajax 
+                                listener="#{productService.updateProductIsDeleted(prod.productId, 0)}"
+                                update="@all"/>
+                        </p:commandButton>
+                        <p:tooltip for="pwd2"
+                                   value="Редактировать"
+                                   style="font-size: 9px"/>
+                    </h:form>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        <h:form>
+            <p:commandButton value="Закрыть" actionListener="#{archiveProductView.close()}">
+                
+            </p:commandButton>
+        </h:form>
+    </h:body>
+</html>

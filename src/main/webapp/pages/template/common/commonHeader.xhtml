@@ -1,0 +1,40 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition>
+            <h:form style="font-size: 11px"> 
+                <p:growl id="messages"/>
+                <p:menubar>
+                    <p:menuitem value="Заказы"
+                                ajax="false"
+                                action="orders"/>
+                    <p:menuitem value="Пользователи"
+                                ajax="false"
+                                action="users"/>
+                    <p:menuitem value="Справка"
+                                url="#" />
+                    <p:submenu label="Категория">
+                        <p:menuitem value="Контент"
+                                    action="main.xhtml"
+                                    ajax="false"/>
+                        <p:menuitem value="Архив"/>
+                    </p:submenu>
+                    <f:facet name="options">
+                        <p:inputText style="margin-right:10px"
+                                     placeholder="Search"
+                                     rendered="false"/>
+                        <p:commandButton  action="#{loginBean.logout}"
+                                          ajax="false"
+                                          value="Logout"
+                                          icon="ui-icon-extlink" />
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </ui:composition>
+    </body>
+
+</html>

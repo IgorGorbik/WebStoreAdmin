@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition>
+            <f:facet name="header">
+                <div align="center">    
+                    <h:outputText 
+                        value="Заказы"
+                        style="font-size: 12px;font-weight: bold;"/>
+                </div>
+            </f:facet>
+            <div>
+                <p:tabView id="tabView">
+                    <p:tab title="Активные">
+                        <p:dataTable id="active"
+                                     var="user"
+                                     value="#{showUsersBean.activeUsers}"
+                                     style="text-align: center;font-size: 10px"
+                                     paginator="true" 
+                                     rows="10">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{user.userId}" />
+                            </p:column>
+                            <p:column headerText="Имя">
+                                <h:outputText value="#{user.name}" />
+                            </p:column>
+                            <p:column headerText="Email">
+                                <h:outputText value="#{user.email}" />
+                            </p:column>
+                            <p:column headerText="Телефон">
+                                <h:outputText value="#{user.phone}" />
+                            </p:column>
+                            <p:column style="width:32px;text-align: center">
+                                <h:form id="form">
+                                    <p:commandButton id="block" 
+                                                     actionListener="#{showUsersBean.block(user.userId)}"
+                                                     update=":tabView:blocking :tabView:active"
+                                                     icon="ui-icon-pencil"/>
+                                    <p:tooltip for="block"
+                                               value="Заблокировать"
+                                               style="font-size: 9px"/>
+                                </h:form>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Бан-лист">
+                        <p:dataTable id="blocking"
+                                     var="user"
+                                     value="#{showUsersBean.blockedUsers}"
+                                     style="text-align: center"
+                                     paginator="true" 
+                                     rows="10">
+                            <p:column headerText="ID">
+                                <h:outputText value="#{user.userId}" />
+                            </p:column>
+                            <p:column headerText="Имя">
+                                <h:outputText value="#{user.name}" />
+                            </p:column>
+                            <p:column headerText="Email">
+                                <h:outputText value="#{user.email}" />
+                            </p:column>
+                            <p:column headerText="Телефон">
+                                <h:outputText value="#{user.phone}" />
+                            </p:column>
+                            <p:column style="width:32px;text-align: center">
+                                <h:form>
+                                    <p:commandButton id="unblock" 
+                                                     actionListener="#{showUsersBean.unblock(user.userId)}"
+                                                     icon="ui-icon-pencil"
+                                                     update=":tabView:blocking :tabView:active"/>
+                                    <p:tooltip for="unblock"
+                                               value="Разблокировать"
+                                               style="font-size: 9px"/>
+                                </h:form>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                </p:tabView>
+            </div>
+        </ui:composition>
+    </body>
+
+</html>
